@@ -331,6 +331,7 @@ int main(int argc, char** argv)
 			system->createFile(fut, "unloadable/95_scene_43_2.serialized", IFile::ECF_READ);
 			file = fut.get();
 		}
+		system->copy("unloadable/95_scene_43_2.serialized", CWD / "serialized_output");
 	}
 
 	// copying files around
