@@ -10,7 +10,7 @@
 #include "nbl/system/CColoredStdoutLoggerWin32.h"
 #include "nbl/system/IApplicationFramework.h"
 
-#include "blake3.h"
+//#include "blake3.h"
 #include <iostream>
 #include <cstdio>
 #include <errno.h>
@@ -317,6 +317,20 @@ int main(int argc, char** argv)
 		//
 		//IAssetWriter::SAssetWriteParams wp(cpumesh.get());
 		//assetManager->writeAsset("objWriteSuccessful.obj", wp);
+	}
+
+	// opening a `.zip` archive and mounting it under a virtual path
+	auto unloadable = system->openFileArchive(CWD / "../../media/unloadable.zip");
+	system->mount(std::move(unloadable), "unloadable");
+	{
+		system::ISystem::future_t<smart_refctd_ptr<IFile>> fut;
+		system->createFile(fut, "unloadable", IFile::ECF_READ);
+		auto file = fut.get();
+		{
+			system::ISystem::future_t<smart_refctd_ptr<IFile>> fut;
+			system->createFile(fut, "unloadable/95_scene_43_2.serialized", IFile::ECF_READ);
+			file = fut.get();
+		}
 	}
 
 	// copying files around
