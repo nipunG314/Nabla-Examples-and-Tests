@@ -324,14 +324,8 @@ int main(int argc, char** argv)
 	system->mount(std::move(unloadable), "unloadable");
 	{
 		system::ISystem::future_t<smart_refctd_ptr<IFile>> fut;
-		system->createFile(fut, "unloadable", IFile::ECF_READ);
-		auto file = fut.get();
-		{
-			system::ISystem::future_t<smart_refctd_ptr<IFile>> fut;
-			system->createFile(fut, "unloadable/95_scene_43_2.serialized", IFile::ECF_READ);
-			file = fut.get();
-		}
-		system->copy("unloadable/95_scene_43_2.serialized", CWD / "serialized_output");
+		system->createFile(fut, CWD / "unloadable.serialized", IFile::ECF_READ);
+		system->copy("unloadable/95_scene_43_2.serialized", CWD / "unloadable.serialized");
 	}
 
 	// copying files around
